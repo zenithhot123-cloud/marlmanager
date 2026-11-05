@@ -24,6 +24,7 @@ interface TaskCardProps {
   onUpdateStatus: (taskId: string, newStatus: TaskStatus) => void;
   onEditTask?: (task: Task) => void;
   onDeleteTask?: (taskId: string) => void;
+  onRequestDelete?: (task: Task) => void;
   onOpenExtendModal?: (task: Task) => void;
   onDropOnTask?: (sourceTaskId: string, targetTask: Task, insertPosition: 'before' | 'after') => void;
 }
@@ -36,6 +37,7 @@ export const TaskCard: React.FC<TaskCardProps> = ({
   onUpdateStatus,
   onEditTask,
   onDeleteTask,
+  onRequestDelete,
   onOpenExtendModal,
   onDropOnTask,
 }) => {
@@ -75,6 +77,16 @@ export const TaskCard: React.FC<TaskCardProps> = ({
     setDropIndicator(null);
     if (sourceTaskId && sourceTaskId !== task.id) {
       onDropOnTask(sourceTaskId, task, targetIndicator === 'top' ? 'before' : 'after');
+    }
+  };
+
+  const handleDeleteClick = () => {
+    if (onRequestDelete) {
+      onRequestDelete(task);
+    } else if (onDeleteTask) {
+      if (window.confirm(`Are you sure you want to delete the task "${task.title}"? This cannot be undone.`)) {
+        onDeleteTask(task.id);
+      }
     }
   };
 
@@ -208,9 +220,9 @@ export const TaskCard: React.FC<TaskCardProps> = ({
                 >
                   <Edit2 className="w-3.5 h-3.5" />
                 </button>
-                {onDeleteTask && (
+                {(onRequestDelete || onDeleteTask) && (
                   <button
-                    onClick={() => onDeleteTask(task.id)}
+                    onClick={handleDeleteClick}
                     className="p-1 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
                     title="Delete Task"
                   >

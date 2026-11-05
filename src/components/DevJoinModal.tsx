@@ -80,10 +80,12 @@ export const DevJoinModal: React.FC<DevJoinModalProps> = ({
     onJoinSuccess(session);
   };
 
-  const handleRemoveSavedSession = (e: React.MouseEvent, projectId: string) => {
+  const handleRemoveSavedSession = (e: React.MouseEvent, s: SavedDevSession) => {
     e.stopPropagation();
-    removeSavedDevSession(projectId);
-    setSavedSessions(getSavedDevSessions());
+    if (window.confirm(`Are you sure you want to remove "${s.projectTitle}" (${s.projectCode}) from your saved workspaces?`)) {
+      removeSavedDevSession(s.projectId);
+      setSavedSessions(getSavedDevSessions());
+    }
   };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -380,7 +382,7 @@ export const DevJoinModal: React.FC<DevJoinModalProps> = ({
                         </span>
                         <button
                           type="button"
-                          onClick={(e) => handleRemoveSavedSession(e, s.projectId)}
+                          onClick={(e) => handleRemoveSavedSession(e, s)}
                           className="p-1 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
                           title="Remove from saved list"
                         >

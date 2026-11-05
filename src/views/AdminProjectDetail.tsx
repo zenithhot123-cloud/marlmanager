@@ -3,6 +3,7 @@ import type { Project, Task, TeamMember, DailyLog, TaskStatus, TaskExtension } f
 import { calculateFinishTime, calculateProjectScheduleDrift, formatDate, triggerCelebration, downloadFile } from '../lib/utils';
 import { TaskCard } from '../components/TaskCard';
 import { ScheduleGanttTimeline } from '../components/ScheduleGanttTimeline';
+import { DeleteTaskModal } from '../components/DeleteTaskModal';
 import { generateDailyStandupDigest, generateOneLineDailySummary } from '../lib/gemini';
 import {
   ArrowLeft,
@@ -75,6 +76,9 @@ export const AdminProjectDetail: React.FC<AdminProjectDetailProps> = ({
 
   // Drag and Drop State
   const [dragOverColumn, setDragOverColumn] = useState<TaskStatus | null>(null);
+
+  // Delete Task Confirmation Modal State
+  const [taskToDelete, setTaskToDelete] = useState<Task | null>(null);
 
   // 1-Line Summary generation state
   const [isGeneratingOneLiner, setIsGeneratingOneLiner] = useState(false);
@@ -716,6 +720,7 @@ export const AdminProjectDetail: React.FC<AdminProjectDetailProps> = ({
                       onUpdateStatus={onUpdateTaskStatus}
                       onDropOnTask={handleDropOnTask}
                       onEditTask={(t) => onOpenTaskModal(t)}
+                      onRequestDelete={(t) => setTaskToDelete(t)}
                       onDeleteTask={onDeleteTask}
                       onOpenExtendModal={onOpenExtendModal}
                     />
@@ -769,6 +774,7 @@ export const AdminProjectDetail: React.FC<AdminProjectDetailProps> = ({
                       onUpdateStatus={onUpdateTaskStatus}
                       onDropOnTask={handleDropOnTask}
                       onEditTask={(t) => onOpenTaskModal(t)}
+                      onRequestDelete={(t) => setTaskToDelete(t)}
                       onDeleteTask={onDeleteTask}
                       onOpenExtendModal={onOpenExtendModal}
                     />
@@ -822,6 +828,7 @@ export const AdminProjectDetail: React.FC<AdminProjectDetailProps> = ({
                       onUpdateStatus={onUpdateTaskStatus}
                       onDropOnTask={handleDropOnTask}
                       onEditTask={(t) => onOpenTaskModal(t)}
+                      onRequestDelete={(t) => setTaskToDelete(t)}
                       onDeleteTask={onDeleteTask}
                       onOpenExtendModal={onOpenExtendModal}
                     />
@@ -1162,6 +1169,14 @@ export const AdminProjectDetail: React.FC<AdminProjectDetailProps> = ({
           )}
         </div>
       )}
+
+      {/* Delete Task Confirmation Modal */}
+      <DeleteTaskModal
+        isOpen={Boolean(taskToDelete)}
+        task={taskToDelete}
+        onClose={() => setTaskToDelete(null)}
+        onConfirmDelete={onDeleteTask}
+      />
     </div>
   );
 };
