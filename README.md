@@ -9,7 +9,7 @@ A modern white-palette project orchestration and daily team intelligence platfor
 ### 1. Dual User Modes & Authentication
 
 - **Admin (Project Manager)**:
-  - **Secure Manager Portal**: Dedicated login screen verifying credentials against `public.admin_users` (`admin@marline.com` / `admin123`) with 1-click Auto-fill and persistent session management.
+  - **Secure Manager Portal**: Dedicated login screen verifying credentials against `public.admin_users` with persistent session management.
   - **Create Projects with Timeline Scheduling**: Select explicit **Start Date** and **Target End Date** calendars with real-time auto-calculated scheduled days ($X$ days = $X \times 8\text{h}$) and auto-generated **4-digit join codes** (e.g. `3309`).
   - **Total Finish Time Countdown**: Live countdown widgets, progress velocity, and overdue tracking.
   - **3-Column Kanban Board**: Track tasks across `To Do`, `In Progress`, and `Completed`. Assign tasks to joined developers with custom durations, priority badges, and due dates.
@@ -71,9 +71,6 @@ npm run build
 
 Open `http://localhost:5173/` in your browser.
 
-- **Admin Login Credentials:**
-  - Email: `admin@marline.com`
-  - Password: `admin123`
 ---
 
 ### 5. 🚢 Deployment to GitHub & Vercel

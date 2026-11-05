@@ -22,12 +22,6 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleFillDemo = () => {
-    setEmail('admin@marline.com');
-    setPassword('admin123');
-    setError(null);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !password.trim()) {
@@ -115,21 +109,6 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
           </div>
         )}
 
-        {/* Demo Credentials Quick Pill */}
-        <div className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
-          <div className="text-[11px] text-slate-600">
-            <span className="font-semibold text-slate-800">Demo: </span>
-            <span>admin@marline.com / admin123</span>
-          </div>
-          <button
-            type="button"
-            onClick={handleFillDemo}
-            className="px-2 py-0.5 rounded-md bg-white border border-slate-200 text-indigo-600 hover:bg-indigo-50 font-semibold text-[11px] transition shadow-2xs"
-          >
-            Fill
-          </button>
-        </div>
-
         {/* Email */}
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-1">
@@ -138,7 +117,7 @@ export const AdminLoginView: React.FC<AdminLoginViewProps> = ({
           <input
             type="text"
             required
-            placeholder="admin@marline.com"
+            placeholder="Enter your email or username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 text-sm text-slate-900"
